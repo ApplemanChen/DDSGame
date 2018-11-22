@@ -93,10 +93,6 @@ public class ProcedureLaunch:GameProcedureBase
 
     private void InitAll()
     {
-        Log.Info("Game Framework Version: {0}", GameFramework.Version.GameFrameworkVersion);
-        Log.Info("Game Version: {0} ({1})", GameFramework.Version.GameVersion, GameFramework.Version.InternalGameVersion.ToString());
-        Log.Info("Unity Version: {0}", Application.unityVersion);
-
         //基础配置
         InitBaseConfig();
         //语言配置初始化

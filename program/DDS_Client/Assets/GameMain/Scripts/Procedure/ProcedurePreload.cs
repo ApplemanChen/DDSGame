@@ -42,7 +42,7 @@ public class ProcedurePreload : GameProcedureBase
             }
         }
 
-        ChangeState<ProcedureLoadLua>(procedureOwner);
+        ChangeState<ProcedureMenu>(procedureOwner);
     }
 
     protected override void OnLeave(ProcedureOwner procedureOwner, bool isShutdown)
@@ -64,16 +64,16 @@ public class ProcedurePreload : GameProcedureBase
     private void PreloadResources()
     {
         UpdateLaunchTips("正在预加载配置表资源...");
-        LoadDatable("UIForm");
-        LoadDatable("Music");
-        LoadDatable("Scene");
-        LoadDatable("Entity");
+        //LoadDatable("UIForm");
+        //LoadDatable("Music");
+        //LoadDatable("Scene");
+        //LoadDatable("Entity");
 
         UpdateLaunchTips("正在预加载语言字典资源...");
-        LoadDictionary("Default");
+        //LoadDictionary("Default");
         UpdateLaunchTips("正在预加载字体资源...");
         //LoadUGUIFont("MainFont");
-        LoadNGUIFont("UIFont");
+        //LoadNGUIFont("UIFont");
     }
 
     //加载数据表
