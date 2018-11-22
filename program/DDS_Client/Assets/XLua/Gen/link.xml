@@ -1,0 +1,20 @@
+﻿
+
+<linker>
+
+	<assembly fullname="Assembly-CSharp">
+	    <type fullname="GameManager" preserve="all"/>
+		<type fullname="LuaCallStatic" preserve="all"/>
+		<type fullname="DialogParams" preserve="all"/>
+		<type fullname="LuaSendEventArgs" preserve="all"/>
+		<type fullname="LuaEventId" preserve="all"/>
+		<type fullname="UILabel" preserve="all"/>
+		<type fullname="UIInput" preserve="all"/>
+		<type fullname="UIButton" preserve="all"/>
+		<type fullname="UIScrollView" preserve="all"/>
+		<type fullname="LuaComponent" preserve="all"/>
+		<type fullname="UIExtension" preserve="all"/>
+		
+	</assembly>
+
+</linker>

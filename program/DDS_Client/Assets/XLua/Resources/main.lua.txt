@@ -1,0 +1,18 @@
+protoc = require "3rd/protoc"
+rapidjson = require "rapidjson" 
+pb = require "pb"
+
+require "Util.Functions"
+require "Util.util"
+require "Perf.memory"
+require "Perf.profiler"
+require "Base.class"
+require "Manager.LuaFormManager"
+
+function main(  )
+	print("main.lua running...")
+
+	LuaFormManager:Init() 
+end
+
+main()
