@@ -68,6 +68,7 @@ public class ProcedureLaunch:GameProcedureBase
     private void SubscribeEvents()
     {
         GameManager.Event.Subscribe(UnityGameFramework.Runtime.OpenUIFormSuccessEventArgs.EventId,OnOpenLaunchFormSuccess);
+        GameManager.Event.Subscribe(UnityGameFramework.Runtime.OpenUIFormFailureEventArgs.EventId, OnOpenLaunchFormFailure);
         GameManager.Event.Subscribe(UnityGameFramework.Runtime.NetworkConnectedEventArgs.EventId, OnNetworkConneted);
         GameManager.Event.Subscribe(UnityGameFramework.Runtime.NetworkErrorEventArgs.EventId,OnNetworkError);
     }
@@ -75,6 +76,7 @@ public class ProcedureLaunch:GameProcedureBase
     private void UnsubscribEvents()
     {
         GameManager.Event.Unsubscribe(UnityGameFramework.Runtime.OpenUIFormSuccessEventArgs.EventId, OnOpenLaunchFormSuccess);
+        GameManager.Event.Unsubscribe(UnityGameFramework.Runtime.OpenUIFormFailureEventArgs.EventId, OnOpenLaunchFormFailure);
         GameManager.Event.Unsubscribe(UnityGameFramework.Runtime.NetworkConnectedEventArgs.EventId, OnNetworkConneted);
         GameManager.Event.Unsubscribe(UnityGameFramework.Runtime.NetworkErrorEventArgs.EventId, OnNetworkError);
     }
@@ -86,9 +88,16 @@ public class ProcedureLaunch:GameProcedureBase
         GameManager.UI.OpenUIForm(assetName, "UI");
     }
 
-    private void OnOpenLaunchFormSuccess(object sender, GameFramework.Event.GameEventArgs e)
+    private void OnOpenLaunchFormSuccess(object sender, GameEventArgs e)
     {
         InitAll();
+    }
+
+    private void OnOpenLaunchFormFailure(object sender, GameEventArgs e)
+    {
+        OpenUIFormFailureEventArgs evt = (OpenUIFormFailureEventArgs)e;
+
+        Log.Error(evt.ErrorMessage);
     }
 
     private void InitAll()

@@ -7,6 +7,16 @@
 public enum SceneId
 {
     Undefined,
-    Scene1 = 100101,
+    /// <summary>
+    /// 登录场景
+    /// </summary>
+    LoginScene = 100101,
+    /// <summary>
+    /// 主场景
+    /// </summary>
     MainScene = 100102,
+    /// <summary>
+    /// 战斗场景
+    /// </summary>
+    FightScene = 100103,
 }

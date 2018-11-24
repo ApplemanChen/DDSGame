@@ -11,7 +11,7 @@ using UnityGameFramework.Runtime;
 /// <summary>
 /// 主菜单流程
 /// </summary>
-public class ProcedureMenu : GameProcedureBase
+public class ProcedureMain : GameProcedureBase
 {
     private bool m_IsEnterScene;
 
@@ -29,7 +29,7 @@ public class ProcedureMenu : GameProcedureBase
         base.OnEnter(procedureOwner);
 
         m_IsEnterScene = false;
-        GameManager.UI.OpenUIForm(UIFormId.LoginForm);
+
     }
 
     protected override void OnLeave(ProcedureOwner procedureOwner, bool isShutdown)
@@ -43,9 +43,6 @@ public class ProcedureMenu : GameProcedureBase
         
         if(m_IsEnterScene)
         {
-            GameManager.UI.CloseUIForm(UIFormId.LoginForm);
-
-            procedureOwner.SetData<VarInt>(Const.ProcedureDataKey.NextSceneId,(int)SceneId.MainScene);
             ChangeState<ProcedureChangeScene>(procedureOwner);
         }
     }

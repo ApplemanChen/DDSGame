@@ -15,6 +15,7 @@ using GameFramework;
 /// </summary>
 public class ProcedureChangeScene : GameProcedureBase
 {
+    private int m_NextSceneId = 0;
     private bool m_IsChangeSceneComplete = false;
     //private int m_BackgroundMusicId = 0;
 
@@ -48,7 +49,7 @@ public class ProcedureChangeScene : GameProcedureBase
         // 还原游戏速度
         GameManager.Base.ResetNormalGameSpeed();
 
-        GameManager.UI.OpenUIForm(UIFormId.LoadingForm,UIFormId.LoadingForm);
+        GameManager.UI.OpenUIForm(UIFormId.LoadingForm, UIFormId.LoadingForm);
     }
 
     protected override void OnLeave(ProcedureOwner procedureOwner, bool isShutdown)
@@ -68,12 +69,12 @@ public class ProcedureChangeScene : GameProcedureBase
 
         if((UIFormId)evt.UserData == UIFormId.LoadingForm)
         {
-            int sceneId = ProcedureOwner.GetData<VarInt>(Const.ProcedureDataKey.NextSceneId).Value;
+            m_NextSceneId = ProcedureOwner.GetData<VarInt>(Const.ProcedureDataKey.NextSceneId).Value;
             IDataTable<DRScene> dtScene = GameManager.DataTable.GetDataTable<DRScene>();
-            DRScene drScene = dtScene.GetDataRow(sceneId);
+            DRScene drScene = dtScene.GetDataRow(m_NextSceneId);
             if (drScene == null)
             {
-                Log.Warning("Can not load scene '{0}' from data table.", sceneId.ToString());
+                Log.Warning("Can not load scene '{0}' from data table.", m_NextSceneId.ToString());
                 return;
             }
             GameManager.Scene.LoadScene(AssetUtility.GetSceneAsset(drScene.AssetName), this);
@@ -91,7 +92,18 @@ public class ProcedureChangeScene : GameProcedureBase
             return;
         }
 
-        ChangeState<ProcedureCity>(procedureOwner);
+        switch(m_NextSceneId)
+        {
+            case (int)SceneId.LoginScene:
+                ChangeState<ProcedureLogin>(procedureOwner);
+                break;
+            case (int)SceneId.MainScene:
+                ChangeState<ProcedureMain>(procedureOwner);
+                break;
+            case (int)SceneId.FightScene:
+                ChangeState<ProcedureFight>(procedureOwner);
+                break;
+        }
     }
 
     private void OnLoadSceneSuccess(object sender, GameEventArgs e)

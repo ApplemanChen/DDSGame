@@ -22,8 +22,6 @@ public class LoadingForm : NGuiForm
 
         TweenType = UITweenType.None;
 
-        GameManager.Event.Subscribe(LoadSceneUpdateEventArgs.EventId, OnLoadSceneUpdate);
-
         m_Slider = CachedTransform.Find("Slider").GetComponent<UISlider>();
         m_Slider.value = 0;
     }
@@ -31,13 +29,14 @@ public class LoadingForm : NGuiForm
     protected internal override void OnOpen(object userData)
     {
         base.OnOpen(userData);
+
+        GameManager.Event.Subscribe(LoadSceneUpdateEventArgs.EventId, OnLoadingUpdate);
     }
 
     protected internal override void OnClose(object userData)
     {
-        GameManager.Event.Unsubscribe(LoadSceneUpdateEventArgs.EventId, OnLoadSceneUpdate);
+        GameManager.Event.Unsubscribe(LoadSceneUpdateEventArgs.EventId, OnLoadingUpdate);
 
-        m_Slider = null;
         base.OnClose(userData);
     }
 
@@ -46,7 +45,7 @@ public class LoadingForm : NGuiForm
         m_Slider.value = value;
     }
 
-    private void OnLoadSceneUpdate(object sender, GameEventArgs e)
+    private void OnLoadingUpdate(object sender, GameEventArgs e)
     {
         LoadSceneUpdateEventArgs ne = (LoadSceneUpdateEventArgs)e;
 

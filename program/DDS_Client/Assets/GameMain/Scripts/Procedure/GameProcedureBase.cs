@@ -8,7 +8,10 @@ using ProcedureOwner = GameFramework.Fsm.IFsm<GameFramework.Procedure.IProcedure
 /// </summary>
 public abstract class GameProcedureBase : ProcedureBase
 {
-    protected ProcedureOwner ProcedureOwner
+    /// <summary>
+    /// 流程拥有者
+    /// </summary>
+    public ProcedureOwner ProcedureOwner
     {
         private set;
         get;

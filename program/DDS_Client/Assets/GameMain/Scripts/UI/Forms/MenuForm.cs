@@ -17,13 +17,13 @@ using GameFramework.Event;
 public class MenuForm : NGuiForm
 {
     private UIButton _btn;
-    private ProcedureMenu _procedure;
+    private ProcedureMain _procedure;
 
     protected internal override void OnInit(object userData)
     {
         base.OnInit(userData);
 
-        _procedure = (ProcedureMenu)userData;
+        _procedure = (ProcedureMain)userData;
 
         _btn = CachedTransform.Find("Button").GetComponent<UIButton>();
         UIEventListener.Get(_btn.gameObject).onClick = OnBtnClick;

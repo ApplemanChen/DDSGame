@@ -96,6 +96,10 @@ public abstract class NGuiForm : UIFormLogic
         Destroy(go);
     }
 
+    /// <summary>
+    /// 界面逻辑初始化，只会生成预制体实例时调用一次! 所以不可在此函数中注册事件！
+    /// </summary>
+    /// <param name="userData"></param>
     protected internal override void OnInit(object userData)
     {
         base.OnInit(userData);
@@ -132,6 +136,10 @@ public abstract class NGuiForm : UIFormLogic
         }
     }
 
+    /// <summary>
+    /// 界面逻辑打开，注册事件函数放这里！
+    /// </summary>
+    /// <param name="userData"></param>
     protected internal override void OnOpen(object userData)
     {
         base.OnOpen(userData);

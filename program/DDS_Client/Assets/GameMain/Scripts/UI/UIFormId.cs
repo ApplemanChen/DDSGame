@@ -14,27 +14,17 @@ public enum UIFormId
     /// <summary>
     /// 启动界面
     /// </summary>
-    LaunchForm = 100,
+    LaunchForm = 100101,
 
     /// <summary>
     /// 弹出框。
     /// </summary>
-    DialogForm = 10101,
-
-    /// <summary>
-    /// 主菜单。
-    /// </summary>
-    MenuForm = 100101,
+    DialogForm = 100102,
 
     /// <summary>
     /// 加载界面
     /// </summary>
-    LoadingForm = 100102,
-
-    /// <summary>
-    /// 关于。
-    /// </summary>
-    AboutForm = 100103,
+    LoadingForm = 100103,
 
     /// <summary>
     /// 登录

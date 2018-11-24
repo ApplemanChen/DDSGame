@@ -20,8 +20,6 @@ public class LuaForm : NGuiForm
     private string m_FormName = "";
     private LuaTable m_FormManagerLuaTable;
 
-
-
     protected internal override void OnInit(object userData)
     {
         base.OnInit(userData);
