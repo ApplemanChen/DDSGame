@@ -38,14 +38,6 @@ public abstract class SceneBase
     }
 
     /// <summary>
-    /// 场景类型
-    /// </summary>
-    public abstract SceneType SceneType
-    {
-        get;
-    }
-
-    /// <summary>
     /// 初始化
     /// </summary>
     protected abstract void OnInit();

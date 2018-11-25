@@ -17,8 +17,11 @@ using System;
 [AddComponentMenu("Game Framework/Custom/Camera")]
 public sealed class CameraComponent : GameFrameworkComponent
 {
-    private IDictionary<CameraLayer, Camera> m_CameraDict;
+    //设计分辨率
+    private readonly float DesignWidth = 1920f;
+    private readonly float DesignHeight = 1080f;
 
+    private IDictionary<CameraLayer, Camera> m_CameraDict;
 
     protected override void Awake()
     {
@@ -49,6 +52,8 @@ public sealed class CameraComponent : GameFrameworkComponent
             m_CameraDict.Add(layer, camera);
         }
 
+        //默认主摄像机适配
+        UpdateCameraSize(GetCamera(CameraLayer.Main));
     }
 
     /// <summary>
@@ -79,11 +84,39 @@ public sealed class CameraComponent : GameFrameworkComponent
     }
 
     /// <summary>
-    /// 弃用摄像机
+    /// 启用摄像机
     /// </summary>
     /// <param name="layer"></param>
     public void ShowCamera(CameraLayer layer)
     {
         GetCamera(layer).enabled = true;
+    }
+
+    /// <summary>
+    /// 摄像机适配
+    /// </summary>
+    private void UpdateCameraSize(Camera camera)
+    {
+        float screenHeight = Screen.height;
+        float screenWidth = Screen.width;
+        if (screenWidth < screenHeight)
+        {
+            float tmp = screenWidth;
+            screenWidth = screenHeight;
+            screenHeight = tmp;
+        }
+        Debug.Log("ScreenWidth = " + screenWidth + " ScreenHeight = " + screenHeight);
+
+        float orthographicSize = camera.orthographicSize;
+
+        float aspectRatio = screenWidth * 1.0f / screenHeight;
+        float designedAspectRatio = DesignWidth / DesignHeight;
+        Debug.Log("Designed aspect ratio = " + designedAspectRatio + " Screen aspectRatio = " + aspectRatio);
+        if (designedAspectRatio > aspectRatio)
+        {
+            orthographicSize = orthographicSize * designedAspectRatio / aspectRatio;
+            Debug.Log("new orthographicSize = " + orthographicSize);
+            camera.orthographicSize = orthographicSize;
+        }
     }
 }

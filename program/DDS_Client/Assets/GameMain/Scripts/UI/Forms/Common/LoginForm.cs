@@ -31,7 +31,7 @@ public class LoginForm : NGuiForm
     private void OnBtnClick(GameObject go)
     {
         //进入主菜单流程
-        m_Procedure.ProcedureOwner.SetData<VarInt>(Const.ProcedureDataKey.NextSceneId, (int)SceneId.MainScene);
+        m_Procedure.ProcedureOwner.SetData<VarInt>(Const.ProcedureDataKey.NextSceneId, (int)SceneId.FightScene);
         m_Procedure.IsEnterScene = true;
     }
 }
