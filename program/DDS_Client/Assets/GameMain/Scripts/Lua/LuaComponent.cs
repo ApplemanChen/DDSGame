@@ -64,7 +64,7 @@ public class LuaComponent : GameFrameworkComponent
 
     private void Update()
     {
-        if(m_LuaEnv != null)
+        if (m_LuaEnv != null)
         {
             m_LuaEnv.Tick();
         }
@@ -381,4 +381,6 @@ public class LuaComponent : GameFrameworkComponent
         string errorMessage = string.Format("Load lua file failed. The file is {0}. ", assetName);
         m_EventComponent.Fire(this, ReferencePool.Acquire<LoadLuaFailureEventArgs>().Fill(assetName, luaName, errorMessage));
     }
+
+
 }

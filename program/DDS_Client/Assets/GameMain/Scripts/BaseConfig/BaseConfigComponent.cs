@@ -7,6 +7,7 @@
 using GameFramework;
 using UnityGameFramework.Runtime;
 using UnityEngine;
+using System;
 
 /// <summary>
 /// 自定义基础配置组件
@@ -44,4 +45,6 @@ public class BaseConfigComponent:GameFrameworkComponent
         NetworkExtension.GameServerIP = GameManager.Config.GetString(Const.ServerConfigKey.GameServerIP);
         NetworkExtension.GameServerPort = GameManager.Config.GetInt(Const.ServerConfigKey.GameServerPort);
     }
+
+
 }

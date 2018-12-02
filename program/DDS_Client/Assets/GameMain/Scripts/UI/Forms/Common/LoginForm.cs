@@ -19,6 +19,8 @@ public class LoginForm : NGuiForm
 
     private ProcedureLogin m_Procedure;
 
+    private int m_TimerId;
+
     protected internal override void OnInit(object userData)
     {
         base.OnInit(userData);
@@ -26,6 +28,29 @@ public class LoginForm : NGuiForm
 
         m_Btn = CachedTransform.Find("Panel/BtnStart").GetComponent<UIButton>();
         UIEventListener.Get(m_Btn.gameObject).onClick = OnBtnClick;
+
+        GameManager.Timer.AddTimer(1f, 10, OnRoundComplete, OnAllComplete).Start();
+        GameManager.Timer.AddTimer(1f, 3, OnRoundComplete2, OnAllComplete2).Start();
+    }
+
+    private void OnRoundComplete2(int timerId)
+    {
+        Log.Info("2 LoginForm: => {0}", GameManager.Timer.GetTimer(timerId).PassTimes);
+    }
+
+    private void OnAllComplete2(int timerId)
+    {
+        Log.Info("2 全部完成！");
+    }
+
+    private void OnAllComplete(int timerId)
+    {
+        Log.Info("1 全部完成！");
+    }
+
+    private void OnRoundComplete(int timerId)
+    {
+        Log.Info("1 LoginForm: => {0}", GameManager.Timer.GetTimer(timerId).PassTimes);
     }
 
     private void OnBtnClick(GameObject go)

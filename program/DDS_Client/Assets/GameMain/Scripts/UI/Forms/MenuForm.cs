@@ -12,7 +12,7 @@ using UnityEngine.Events;
 using GameFramework.Event;
 
 /// <summary>
-/// 菜单界面
+/// 菜单界面(已弃用)
 /// </summary>
 public class MenuForm : NGuiForm
 {

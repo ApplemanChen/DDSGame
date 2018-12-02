@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using UnityGameFramework.Runtime;
+using System.Collections.Generic;
+using System;
 
 /// <summary>
 /// 游戏全局入口
@@ -114,6 +116,11 @@ public class GameManager : MonoBehaviour
         get;
     }
 
+    public static TimerComponent Timer
+    {
+        private set;
+        get;
+    }
 
     #endregion
 
@@ -136,11 +143,15 @@ public class GameManager : MonoBehaviour
         WebRequest = GameEntry.GetComponent<WebRequestComponent>();
     }
 
+    /// <summary>
+    /// 初始化自定义组件
+    /// </summary>
     private void InitCustomComponents()
     {
         BaseConfig = GameEntry.GetComponent<BaseConfigComponent>();
         Lua = GameEntry.GetComponent<LuaComponent>();
         Camera = GameEntry.GetComponent<CameraComponent>();
+        Timer = GameEntry.GetComponent<TimerComponent>();
     }
 
     void Start()
@@ -157,4 +168,5 @@ public class GameManager : MonoBehaviour
     {
         GameEntry.Shutdown(shutDownType);
     }
+
 }

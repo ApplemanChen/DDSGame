@@ -105,18 +105,18 @@ public sealed class CameraComponent : GameFrameworkComponent
             screenWidth = screenHeight;
             screenHeight = tmp;
         }
-        Debug.Log("ScreenWidth = " + screenWidth + " ScreenHeight = " + screenHeight);
 
         float orthographicSize = camera.orthographicSize;
 
         float aspectRatio = screenWidth * 1.0f / screenHeight;
         float designedAspectRatio = DesignWidth / DesignHeight;
-        Debug.Log("Designed aspect ratio = " + designedAspectRatio + " Screen aspectRatio = " + aspectRatio);
+        Log.Info("设计分辨率：{0} x {1}，宽高比：{2}", DesignWidth,DesignHeight, designedAspectRatio);
+        Log.Info("实际分辨率：{0} x {1} , 宽高比：{2}",screenWidth,screenHeight, aspectRatio);
         if (designedAspectRatio > aspectRatio)
         {
             orthographicSize = orthographicSize * designedAspectRatio / aspectRatio;
-            Debug.Log("new orthographicSize = " + orthographicSize);
             camera.orthographicSize = orthographicSize;
+            Log.Info("修改后的 orthographicSize = {0} ",orthographicSize);
         }
     }
 }
