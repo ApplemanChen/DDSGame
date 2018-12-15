@@ -22,8 +22,6 @@ public abstract class TimerBase
     /// </summary>
     public abstract float Duration { get; }
 
-
-
     /// <summary>
     /// 总的循环执行次数
     /// </summary>

@@ -19,12 +19,14 @@ using UnityGameFramework.Runtime;
 [AddComponentMenu("Game Framework/Custom/Timer")]
 public sealed class TimerComponent : GameFrameworkComponent
 {
-    private static int s_SerialId = 0;
+    //全局静态变量编号
+    private static int s_SerialId = 1000;
 
     private Type m_TimerClassType; 
     private Dictionary<int, TimerBase> m_TimerDict;
     private List<int> m_WillReleaseTimerIdList;
     private List<int> m_AutoReleaseTimerIdList;
+    private Queue<int> m_TimerIdPool;
 
     /// <summary>
     /// 计时器类型
@@ -32,6 +34,9 @@ public sealed class TimerComponent : GameFrameworkComponent
     [SerializeField]
     private string m_TimerTypeName = "DefaultTimer";
 
+    /// <summary>
+    /// 当前计时器个数
+    /// </summary>
     [SerializeField]
     private int m_TimerCount = 0;
 
@@ -42,6 +47,7 @@ public sealed class TimerComponent : GameFrameworkComponent
         m_TimerDict = new Dictionary<int, TimerBase>();
         m_AutoReleaseTimerIdList = new List<int>();
         m_WillReleaseTimerIdList = new List<int>();
+        m_TimerIdPool = new Queue<int>();
     }
 
     private void Start()
@@ -184,6 +190,16 @@ public sealed class TimerComponent : GameFrameworkComponent
     }
 
     /// <summary>
+    /// 重置计时器
+    /// </summary>
+    /// <param name="timerId"></param>
+    public void ResetTimer(int timerId)
+    {
+        TimerBase timer = GetTimer(timerId);
+        timer.Reset();
+    }
+
+    /// <summary>
     /// 移除计时器
     /// </summary>
     /// <param name="timerId"></param>
@@ -193,7 +209,7 @@ public sealed class TimerComponent : GameFrameworkComponent
         {
             if(m_TimerDict.Remove(timerId))
             {
-                s_SerialId--;
+                m_TimerIdPool.Enqueue(timerId);
                 return true;
             }
         }
@@ -218,6 +234,11 @@ public sealed class TimerComponent : GameFrameworkComponent
     /// <returns></returns>
     private int GenerateTimerId()
     {
+        if(m_TimerIdPool.Count > 0)
+        {
+            return m_TimerIdPool.Dequeue();
+        }
+
         return ++s_SerialId;
     }
 
@@ -226,8 +247,10 @@ public sealed class TimerComponent : GameFrameworkComponent
     /// </summary>
     public void Clear()
     {
+        s_SerialId = 1000;
         m_TimerDict.Clear();
         m_AutoReleaseTimerIdList.Clear();
         m_WillReleaseTimerIdList.Clear();
+        m_TimerIdPool.Clear();
     }
 }
