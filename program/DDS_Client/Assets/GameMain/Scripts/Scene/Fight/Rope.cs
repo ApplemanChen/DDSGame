@@ -10,9 +10,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 绳子生成工厂
+/// 绳子
 /// </summary>
-public class RopeFactory:MonoBehaviour
+public class Rope:MonoBehaviour
 {
     [Header("起始钉子，不可见")]
     [SerializeField]
@@ -34,13 +34,13 @@ public class RopeFactory:MonoBehaviour
     [SerializeField]
     private int m_MaxEnvForce = 100;
 
-    private List<Rigidbody2D> m_RopeItemList;
+    private List<RopeItem> m_RopeItemList;
 
-    private Rigidbody2D m_LastRopeItem;
+    private RopeItem m_LastRopeItem;
 
     private void Start()
     {
-        m_RopeItemList = new List<Rigidbody2D>();
+        m_RopeItemList = new List<RopeItem>();
         GenerateRope(m_ItemPrefab, m_ItemLen);
     }
 
@@ -58,6 +58,7 @@ public class RopeFactory:MonoBehaviour
         }
 
         Rigidbody2D temp = m_Hook;
+        RopeItem ropeItem = null;
         //生成
         for (int i = 0;i<len;i++)
         {
@@ -67,16 +68,18 @@ public class RopeFactory:MonoBehaviour
             itemGo.transform.localPosition = Vector3.zero;
             itemGo.transform.localScale = Vector3.one;
             itemGo.name = "RopeItem" + i;
-            itemGo.AddComponent<RopeItem>();
 
             HingeJoint2D hingeJoint = itemGo.GetComponent<HingeJoint2D>();
             hingeJoint.connectedBody = temp;
 
-            temp = itemGo.GetComponent<Rigidbody2D>();
-            m_RopeItemList.Add(temp);
+            ropeItem = itemGo.AddComponent<RopeItem>();
+            ropeItem.SetData(this);
+            m_RopeItemList.Add(ropeItem);
+
+            temp = ropeItem.Rigidbody2D;
         }
 
-        m_LastRopeItem = temp;
+        m_LastRopeItem = ropeItem;
 
         //给末端一个力，模拟飘动
         int envForce = GameFramework.Utility.Random.GetRandom(m_MinEnvForce, m_MaxEnvForce);
@@ -86,10 +89,9 @@ public class RopeFactory:MonoBehaviour
     //给绳结施加一个力
     public void AddForce(Vector2 force)
     {
-        //m_LastRopeItem.AddForce(force);
-        foreach(Rigidbody2D item in m_RopeItemList)
+        foreach(RopeItem item in m_RopeItemList)
         {
-            item.AddForce(force);
+            item.Rigidbody2D.AddForce(force);
         }
     }
 
@@ -100,6 +102,6 @@ public class RopeFactory:MonoBehaviour
     public void ConnectBody(HingeJoint2D body)
     {
         body.enabled = true;
-        body.connectedBody = m_LastRopeItem;
+        body.connectedBody = m_LastRopeItem.Rigidbody2D;
     }
 }

@@ -13,16 +13,33 @@ using UnityEngine;
 /// </summary>
 public class RopeItem:MonoBehaviour
 {
-    private void Update()
+    private Rope m_Rope;
+
+    public Rigidbody2D Rigidbody2D
     {
-        
+        private set;
+        get;
+    }
+
+    private void Awake()
+    {
+        Rigidbody2D = gameObject.GetComponent<Rigidbody2D>();
+    }
+
+    /// <summary>
+    /// 设置数据
+    /// </summary>
+    /// <param name="rope"></param>
+    public void SetData(Rope rope)
+    {
+        m_Rope = rope;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "Player")
         {
-            GameManager.Event.Fire(this, ReferencePool.Acquire<TriggerRopItemEventArgs>().Fill(this));
+            GameManager.Event.Fire(this, ReferencePool.Acquire<TriggerRopItemEventArgs>().Fill(this,m_Rope));
         }
     }
 }

@@ -25,6 +25,15 @@ public class TriggerRopItemEventArgs : GameEventArgs
     }
 
     /// <summary>
+    /// 当前绳子
+    /// </summary>
+    public Rope Rope
+    {
+        private set;
+        get;
+    }
+
+    /// <summary>
     /// 触发的对应绳结
     /// </summary>
     public RopeItem RopeItem
@@ -36,11 +45,13 @@ public class TriggerRopItemEventArgs : GameEventArgs
     public override void Clear()
     {
         RopeItem = null;
+        Rope = null;
     }
 
-    public TriggerRopItemEventArgs Fill(RopeItem item)
+    public TriggerRopItemEventArgs Fill(RopeItem item,Rope rope)
     {
         RopeItem = item;
+        Rope = rope;
         return this;
     }
 }

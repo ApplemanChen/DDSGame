@@ -1,11 +1,13 @@
 ﻿using System;
 using GameFramework.Event;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class FightController : MonoBehaviour {
-    public RopeFactory rope;
+    public List<Rope> ropeList;
     public Rigidbody2D player;
 
+    private Rope m_CurRope = null;
     private HingeJoint2D m_BodyJoint;
     //默认向右
     private int m_Drection = 1;
@@ -21,7 +23,12 @@ public class FightController : MonoBehaviour {
     private void OnTriggerRopeItem(object sender, GameEventArgs e)
     {
         TriggerRopItemEventArgs evt = (TriggerRopItemEventArgs)e;
-        Debug.Log("ropeItem:"+evt.RopeItem.name);
+        if(m_CurRope != evt.Rope)
+        {
+            m_CurRope = evt.Rope;
+            m_CurRope.ConnectBody(m_BodyJoint);
+            m_IsConnected = true;
+        }
     }
 
     void Update()
@@ -30,7 +37,8 @@ public class FightController : MonoBehaviour {
         {
             if (m_IsConnected == false)
             {
-                rope.ConnectBody(m_BodyJoint);
+                ropeList[0].ConnectBody(m_BodyJoint);
+                m_CurRope = ropeList[0];
                 m_IsConnected = true;
             }else
             {
@@ -42,22 +50,26 @@ public class FightController : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.A))
         {
             m_Drection = -1;
-            //player.AddForce(Vector2.left * 1000);
 
-            rope.AddForce(Vector2.left * 1000);
+            if(m_CurRope)
+            {
+                m_CurRope.AddForce(Vector2.left * 1000);
+            }
         }
 
         if(Input.GetKeyDown(KeyCode.D))
         {
             m_Drection = 1;
-            //player.AddForce(Vector2.right * 1000);
 
-            rope.AddForce(Vector2.right * 1000);
+            if(m_CurRope)
+            {
+                m_CurRope.AddForce(Vector2.right * 1000);
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            player.AddForce(new Vector3(m_Drection*1000, 1000,0));
+            player.AddForce(new Vector3(m_Drection*100, 3000,0));
         }
 
     }
